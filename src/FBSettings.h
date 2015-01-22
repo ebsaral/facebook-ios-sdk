@@ -324,4 +324,7 @@ typedef NS_ENUM(NSUInteger, FBRestrictedTreatment) {
  */
 + (void)setLimitEventAndDataUsage:(BOOL)limitEventAndDataUsage;
 
++ (BOOL)isPlatformCompatibilityEnabled;
++ (void)enablePlatformCompatibility:(BOOL)enable;
+
 @end

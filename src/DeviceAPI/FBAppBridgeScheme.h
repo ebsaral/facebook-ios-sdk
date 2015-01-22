@@ -18,6 +18,8 @@
 
 #import "FBAppBridge.h"
 
+@class FBLinkShareParams;
+@class FBOpenGraphActionParams;
 @class FBLoginDialogParams;
 @class FBOpenGraphActionShareDialogParams;
 @class FBShareDialogParams;
@@ -27,11 +29,16 @@
 @property (nonatomic, copy) NSString *version;
 
 // Notably these can return nil if no valid scheme was found for the device (i.e,. related app is not installed).
-+ (FBAppBridgeScheme *)bridgeSchemeForFBAppForShareDialogParams:(FBShareDialogParams *)params;
-+ (FBAppBridgeScheme *)bridgeSchemeForFBAppForOpenGraphActionShareDialogParams:(FBOpenGraphActionShareDialogParams *)params;
-+ (FBAppBridgeScheme *)bridgeSchemeForFBAppForLoginParams:(FBLoginDialogParams *)params;
++ (instancetype)bridgeSchemeForFBAppForShareDialogParams:(FBShareDialogParams *)params;
++ (instancetype)bridgeSchemeForFBAppForOpenGraphActionShareDialogParams:(FBOpenGraphActionShareDialogParams *)params;
++ (instancetype)bridgeSchemeForFBAppForLoginParams:(FBLoginDialogParams *)params;
+
++ (instancetype)bridgeSchemeForFBMessengerForShareDialogPhotos;
++ (instancetype)bridgeSchemeForFBMessengerForShareDialogParams:(FBLinkShareParams *)params;
++ (instancetype)bridgeSchemeForFBMessengerForOpenGraphActionShareDialogParams:(FBOpenGraphActionParams *)params;
 
 + (BOOL)isSupportedScheme:(NSString *)scheme;
 - (NSURL *)urlForMethod:(NSString *)method queryParams:(NSDictionary *)queryParams;
+- (NSURL *)URLForMethod:(NSString *)method queryParams:(NSDictionary *)queryParams;
 
 @end

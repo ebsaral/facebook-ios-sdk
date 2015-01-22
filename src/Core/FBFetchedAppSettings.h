@@ -25,6 +25,7 @@
 @property (readwrite) BOOL supportsImplicitSdkLogging;
 @property (readwrite) BOOL suppressNativeGdp;
 @property (readonly, nonatomic) NSString *appID;
+@property (copy, nonatomic) NSDictionary *dialogConfigs;
 
 - (instancetype)initWithAppID:(NSString *)appID;
 

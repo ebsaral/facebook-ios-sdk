@@ -234,7 +234,7 @@ static FBAppBridge *g_sharedInstance;
     }
     queryParams[FBBridgeURLParams.methodArgs] = jsonString;
 
-    NSURL *url = [bridgeScheme urlForMethod:appCall.dialogData.method
+    NSURL *url = [bridgeScheme URLForMethod:appCall.dialogData.method
                                 queryParams:queryParams];
 
     // Track the callback and AppCall, now that we are just about to invoke the url

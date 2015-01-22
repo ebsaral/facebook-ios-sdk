@@ -83,6 +83,9 @@ typedef enum FBAdvertisingTrackingStatus {
 + (NSString *)buildFacebookUrlWithPre:(NSString *)pre;
 + (NSString *)buildFacebookUrlWithPre:(NSString *)pre
                              withPost:(NSString *)post;
++ (NSString *)buildFacebookUrlWithPre:(NSString *)pre
+                                 post:(NSString *)post
+                              version:(NSString *)version;
 + (BOOL)isMultitaskingSupported;
 + (BOOL)isSystemAccountStoreAvailable;
 + (void)deleteFacebookCookies;

@@ -494,6 +494,58 @@ static NSDate *g_fetchedAppSettingsTimestamp = nil;
     return [NSString stringWithFormat:@"%@%@%@", pre, domain, post ?: @""];
 }
 
++ (NSString *)buildFacebookUrlWithPre:(NSString *)pre
+                                 post:(NSString *)post
+                              version:(NSString *)version {
+    // break-out domainPart, domain, version and post
+    NSString *domainPart = [FBSettings facebookDomainPart];
+    NSString *domain = FB_BASE_URL;
+    
+    version = version ?: [FBSettings platformVersion];
+    if (version.length) {
+        version = [NSString stringWithFormat:@"/%@", version];
+    }
+    
+    post = post ?: @"";
+    
+    if ([post length] > 2 &&
+        version.length &&
+        // clear the auto version if there is already a version in the form v#.# in path
+        [post characterAtIndex:1] == 'v') {
+        int grammarPart = 0;
+        int index = 2;
+        BOOL clearVersion = NO;
+        while (post.length > index) {
+            unichar c = [post characterAtIndex:index];
+            if (grammarPart == 0) { // first - digit
+                if ([NSCharacterSet.decimalDigitCharacterSet characterIsMember:c]) {
+                    grammarPart++;
+                } else {
+                    break;
+                }
+            } else if (grammarPart == 1) {
+                if (c == '.') { // second - n digits or dot
+                    clearVersion = YES;
+                    grammarPart++;
+                } else if (![NSCharacterSet.decimalDigitCharacterSet characterIsMember:c]) {
+                    break;
+                }
+            }
+            index++;
+        }
+        if (clearVersion) {
+            version = @"";
+        }
+    }
+    
+    // construct url
+    if (domainPart) {
+        domain = [NSString stringWithFormat:@"%@.%@", domainPart, FB_BASE_URL];
+    }
+    NSString *result = [NSString stringWithFormat:@"%@%@%@%@", pre, domain, version, post];
+    return result;
+}
+
 + (BOOL)isMultitaskingSupported {
     return [[UIDevice currentDevice] respondsToSelector:@selector(isMultitaskingSupported)] &&
     [[UIDevice currentDevice] isMultitaskingSupported];

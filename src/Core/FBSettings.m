@@ -66,6 +66,7 @@ static NSString *g_defaultFacebookDomainPart = nil;
 static CGFloat g_defaultJPEGCompressionQuality = 0.9;
 static NSUInteger g_betaFeatures = 0;
 static FBRestrictedTreatment g_restrictedTreatment;
+static BOOL g_enableLegacyGraphAPI = NO;
 
 + (NSString *)sdkVersion {
     return FB_IOS_SDK_VERSION_STRING;
@@ -85,6 +86,24 @@ static FBRestrictedTreatment g_restrictedTreatment;
     [newValue retain];
     [g_loggingBehavior release];
     g_loggingBehavior = newValue;
+}
+
++ (BOOL)isPlatformCompatibilityEnabled {
+    return g_enableLegacyGraphAPI;
+}
+
++ (void)enablePlatformCompatibility:(BOOL)enable {
+    if (enable != g_enableLegacyGraphAPI) {
+        g_enableLegacyGraphAPI = enable;
+    }
+}
+
++ (NSString *)platformVersion {
+    if ([[self class] isPlatformCompatibilityEnabled]) {
+        return @"v1.0";
+    } else {
+        return FB_IOS_SDK_TARGET_PLATFORM_VERSION;
+    }
 }
 
 + (NSString *)appVersion {
